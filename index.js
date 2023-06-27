@@ -3,8 +3,10 @@ const app = express();
 const cron = require("node-cron");
 const twilio = require("twilio");
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const accountSid = "ACcc8828f913751716101198764016468f";
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+const authToken = "b3efab8602f128d32950b3cde8340a61";
 const client = twilio(accountSid, authToken);
 
 app.use(express.json());
@@ -22,8 +24,8 @@ app.use(express.json());
 function sendSMS(message, to) {
     client.messages
         .create({ body: message, from: "+447476564117", to })
-        .then((message) => console.log(`Message send to ${to}: ${message.sid}`))
-        .catch((error) => console.error(`Failed to end message to ${to}: ${error}`));
+        .then((message) => console.log(`Message sent to ${to}: ${message.sid}`))
+        .catch((error) => console.error(`Failed to send message to ${to}: ${error}`));
 }
 
 function scheduleSMS(scheduledTime, message, to) {
@@ -31,6 +33,8 @@ function scheduleSMS(scheduledTime, message, to) {
         sendSMS(message, to);
     });
 }
+
+// sendSMS("Here is your afternoon message!", "+447716610830");
 
 app.post("/scheduleSMS", (req, res) => {
     const { scheduledTime, message, to } = req.body;
@@ -40,6 +44,26 @@ app.post("/scheduleSMS", (req, res) => {
     sendSMS(message, to);
 
     res.status(200).send("SMS scheduled successfully");
+});
+
+app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
+    const messageBody = req.body.Body;
+    const fromNumber = req.body.From;
+
+    console.log(`Received a message from ${fromNumber}: ${messageBody}`);
+
+    const responseMessage = "Thank you for your message!";
+
+    client.messages
+        .create({ body: responseMessage, from: "+447476564117", to: "+447716610830" })
+        .then((message) => {
+            console.log(`Sent a response to ${fromNumber}: ${message.sid}`);
+            res.status(200).end();
+        })
+        .catch((error) => {
+            console.error(`Failed to send a response to ${fromNumber}: ${error}`);
+            res.status(500).end();
+        });
 });
 
 app.listen(process.env.PORT || 3000);
