@@ -2,21 +2,36 @@ const express = require("express");
 const app = express();
 const cron = require("node-cron");
 const twilio = require("twilio");
-const { MessagingResponse } = twilio.twiml;
+const xml2js = require("xml2js");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-// app.use(express.json());
+app.use(express.text({ type: "apllication/xml" }));
+
+app.use((req, res, next) => {
+    if (req.is("application/xml")) {
+        xml2js
+            .parseStringPromise(req.body)
+            .then((parsedData) => {
+                req.body = parsedData;
+                next();
+            })
+            .catch((error) => {
+                console.error("Failed to parse XML: ", error);
+                res.status(400).end();
+            });
+    } else {
+        next();
+    }
+});
+
+app.use(express.json());
 
 app.all("/", (req, res) => {
     console.log("Just got a request!");
     res.send("Yo!");
-
-    // client.messages
-    //     .create({ body: "Hey Paul!", from: "+447476564117", to: "+447716610830" })
-    //     .then((message) => console.log(message.sid));
 });
 
 function sendSMS(message, to) {
@@ -32,43 +47,33 @@ function scheduleSMS(scheduledTime, message, to) {
     });
 }
 
-// sendSMS("Here is your afternoon message!", "+447716610830");
-
 app.post("/scheduleSMS", (req, res) => {
     const { scheduledTime, message, to } = req.body;
 
-    console.log({ req, scheduledTime, message, to });
     // scheduleSMS(scheduledTime, message, to);
-    // sendSMS(message, to);
-    sendSMS("Let's try this again...", "+447716610830");
+    sendSMS(message, to);
 
     res.status(200).send("SMS scheduled successfully");
 });
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
-    const twiml = new MessagingResponse();
+    const messageBody = req.body.Body;
+    const fromNumber = req.body.From;
 
-    twiml.message("Thanks for your message!");
+    console.log(`Received a message from ${fromNumber}: ${messageBody}`);
 
-    res.type("text/xml").send(twiml.toString());
+    const responseMessage = "Thank you for your message!";
 
-    // const messageBody = req.body.Body;
-    // const fromNumber = req.body.From;
-
-    // console.log(`Received a message from ${fromNumber}: ${messageBody}`);
-
-    // const responseMessage = "Thank you for your message!";
-
-    // client.messages
-    //     .create({ body: responseMessage, from: "+447476564117", to: "+447716610830" })
-    //     .then((message) => {
-    //         console.log(`Sent a response to ${fromNumber}: ${message.sid}`);
-    //         res.status(200).end();
-    //     })
-    //     .catch((error) => {
-    //         console.error(`Failed to send a response to ${fromNumber}: ${error}`);
-    //         res.status(500).end();
-    //     });
+    client.messages
+        .create({ body: responseMessage, from: "+447476564117", to: "+447716610830" })
+        .then((message) => {
+            console.log(`Sent a response to ${fromNumber}: ${message.sid}`);
+            res.status(200).end();
+        })
+        .catch((error) => {
+            console.error(`Failed to send a response to ${fromNumber}: ${error}`);
+            res.status(500).end();
+        });
 });
 
 app.listen(process.env.PORT || 3000);
