@@ -35,6 +35,7 @@ app.all("/", (req, res) => {
 });
 
 function sendSMS(message, to) {
+    console.log("message", "=>", message, "to", "=>", to);
     client.messages
         .create({ body: message, from: "+447476564117", to })
         .then((message) => console.log(`Message sent to ${to}: ${message.sid}`))
@@ -51,6 +52,7 @@ app.post("/scheduleSMS", (req, res) => {
     const { scheduledTime, message, to } = req.body;
 
     // scheduleSMS(scheduledTime, message, to);
+    console.log({ message, to });
     sendSMS(message, to);
 
     res.status(200).send("SMS scheduled successfully");
