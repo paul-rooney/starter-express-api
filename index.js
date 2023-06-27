@@ -36,7 +36,8 @@ app.post("/scheduleSMS", (req, res) => {
     const { scheduledTime, message, to } = req.body;
 
     console.log(scheduledTime, message, to);
-    scheduleSMS(scheduledTime, message, to);
+    // scheduleSMS(scheduledTime, message, to);
+    sendSMS(message, to);
 
     res.status(200).send("SMS scheduled successfully");
 });
