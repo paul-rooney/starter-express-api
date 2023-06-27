@@ -4,9 +4,7 @@ const cron = require("node-cron");
 const twilio = require("twilio");
 
 // const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const accountSid = "ACcc8828f913751716101198764016468f";
 // const authToken = process.env.TWILIO_AUTH_TOKEN;
-const authToken = "b3efab8602f128d32950b3cde8340a61";
 const client = twilio(accountSid, authToken);
 
 app.use(express.json());
