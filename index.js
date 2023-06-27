@@ -46,7 +46,7 @@ app.post("/scheduleSMS", (req, res) => {
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
     // const obj = Object.fromEntries(req.body.Body.split("&").map(item => item.split("=")))
-    console.log(req);
+    console.log(req.body);
     const messageBody = req.body.Body;
     const fromNumber = req.body.From;
 
