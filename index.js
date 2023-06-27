@@ -40,7 +40,8 @@ app.post("/scheduleSMS", (req, res) => {
 
     console.log({ req, scheduledTime, message, to });
     // scheduleSMS(scheduledTime, message, to);
-    sendSMS(message, to);
+    // sendSMS(message, to);
+    sendSMS("Let's try this again...", "+447716610830")
 
     res.status(200).send("SMS scheduled successfully");
 });
