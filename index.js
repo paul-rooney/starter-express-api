@@ -2,30 +2,11 @@ const express = require("express");
 const app = express();
 const cron = require("node-cron");
 const twilio = require("twilio");
-const xml2js = require("xml2js");
+const querystring = require("querystring");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
-
-app.use(express.text({ type: "application/xml" }));
-
-app.use((req, res, next) => {
-    if (req.is("application/xml")) {
-        xml2js
-            .parseStringPromise(req.body)
-            .then((parsedData) => {
-                req.body = parsedData;
-                next();
-            })
-            .catch((error) => {
-                console.error("Failed to parse XML: ", error);
-                res.status(400).end();
-            });
-    } else {
-        next();
-    }
-});
 
 app.use(express.json());
 
@@ -64,8 +45,10 @@ app.post("/scheduleSMS", async (req, res) => {
 });
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
-    const messageBody = req.body.Body;
-    const fromNumber = req.body.From;
+    const requestBody = querystring.parse(req.body);
+
+    const messageBody = requestBody.Body;
+    const fromNumber = requestBody.From;
 
     console.log(`Received a message from ${fromNumber}: ${messageBody}`);
 
