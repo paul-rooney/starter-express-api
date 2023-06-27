@@ -2,12 +2,13 @@ const express = require("express");
 const app = express();
 const cron = require("node-cron");
 const twilio = require("twilio");
+const { MessagingResponse } = twilio.twiml;
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-app.use(express.json());
+// app.use(express.json());
 
 app.all("/", (req, res) => {
     console.log("Just got a request!");
@@ -39,31 +40,35 @@ app.post("/scheduleSMS", (req, res) => {
     console.log({ req, scheduledTime, message, to });
     // scheduleSMS(scheduledTime, message, to);
     // sendSMS(message, to);
-    sendSMS("Let's try this again...", "+447716610830")
+    sendSMS("Let's try this again...", "+447716610830");
 
     res.status(200).send("SMS scheduled successfully");
 });
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
-    // const obj = Object.fromEntries(req.body.Body.split("&").map(item => item.split("=")))
-    console.log(req.body);
-    const messageBody = req.body.Body;
-    const fromNumber = req.body.From;
+    const twiml = new MessagingResponse();
 
-    console.log(`Received a message from ${fromNumber}: ${messageBody}`);
+    twiml.message("Thanks for your message!");
 
-    const responseMessage = "Thank you for your message!";
+    res.type("text/xml").send(twiml.toString());
 
-    client.messages
-        .create({ body: responseMessage, from: "+447476564117", to: "+447716610830" })
-        .then((message) => {
-            console.log(`Sent a response to ${fromNumber}: ${message.sid}`);
-            res.status(200).end();
-        })
-        .catch((error) => {
-            console.error(`Failed to send a response to ${fromNumber}: ${error}`);
-            res.status(500).end();
-        });
+    // const messageBody = req.body.Body;
+    // const fromNumber = req.body.From;
+
+    // console.log(`Received a message from ${fromNumber}: ${messageBody}`);
+
+    // const responseMessage = "Thank you for your message!";
+
+    // client.messages
+    //     .create({ body: responseMessage, from: "+447476564117", to: "+447716610830" })
+    //     .then((message) => {
+    //         console.log(`Sent a response to ${fromNumber}: ${message.sid}`);
+    //         res.status(200).end();
+    //     })
+    //     .catch((error) => {
+    //         console.error(`Failed to send a response to ${fromNumber}: ${error}`);
+    //         res.status(500).end();
+    //     });
 });
 
 app.listen(process.env.PORT || 3000);
