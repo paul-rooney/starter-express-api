@@ -11,15 +11,16 @@ const client = twilio(accountSid, authToken);
 
 app.use(express.json());
 
-// app.all("/", (req, res) => {
-//     console.log("Just got a request!");
-//     // res.send("Yo!");
+app.all("/", (req, res) => {
+    console.log("Just got a request!");
+    // res.send("Yo!");
 
-//     client.messages
-//         .create({ body: "Hey Paul!", from: "+447476564117", to: "+447716610830" })
-//         .then((message) => console.log(message.sid))
-//         .done();
-// });
+    // client.messages
+    //     .create({ body: "Hey Paul!", from: "+447476564117", to: "+447716610830" })
+    //     .then((message) => console.log(message.sid))
+    //     .done();
+    sendSMS("Let's try this again...", "+447716610830")
+});
 
 function sendSMS(message, to) {
     client.messages
@@ -39,7 +40,7 @@ function scheduleSMS(scheduledTime, message, to) {
 app.post("/scheduleSMS", (req, res) => {
     const { scheduledTime, message, to } = req.body;
 
-    console.log(scheduledTime, message, to);
+    console.log({ req, scheduledTime, message, to });
     // scheduleSMS(scheduledTime, message, to);
     sendSMS(message, to);
 
