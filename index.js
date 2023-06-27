@@ -17,7 +17,7 @@ app.all("/", (req, res) => {
     //     .create({ body: "Hey Paul!", from: "+447476564117", to: "+447716610830" })
     //     .then((message) => console.log(message.sid))
     //     .done();
-    sendSMS("Let's try this again...", "+447716610830")
+    // sendSMS("Let's try this again...", "+447716610830")
 });
 
 function sendSMS(message, to) {
