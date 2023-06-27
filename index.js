@@ -48,14 +48,19 @@ function scheduleSMS(scheduledTime, message, to) {
     });
 }
 
-app.post("/scheduleSMS", (req, res) => {
-    const { scheduledTime, message, to } = req.body;
+app.post("/scheduleSMS", async (req, res) => {
+    try {
+        const { scheduledTime, message, to } = req.body;
+        console.log({ message, to });
 
-    // scheduleSMS(scheduledTime, message, to);
-    console.log({ message, to });
-    sendSMS(message, to);
+        // scheduleSMS(scheduledTime, message, to);
+        await sendSMS(message, to);
 
-    res.status(200).send("SMS scheduled successfully");
+        res.status(200).send("SMS scheduled successfully");
+    } catch (error) {
+        console.error("Failed to process the request: ", error);
+        res.status(500).send("Failed to process the request");
+    }
 });
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
