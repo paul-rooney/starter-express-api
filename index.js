@@ -11,13 +11,11 @@ app.use(express.json());
 
 app.all("/", (req, res) => {
     console.log("Just got a request!");
-    // res.send("Yo!");
+    res.send("Yo!");
 
     // client.messages
     //     .create({ body: "Hey Paul!", from: "+447476564117", to: "+447716610830" })
-    //     .then((message) => console.log(message.sid))
-    //     .done();
-    // sendSMS("Let's try this again...", "+447716610830")
+    //     .then((message) => console.log(message.sid));
 });
 
 function sendSMS(message, to) {
@@ -47,8 +45,9 @@ app.post("/scheduleSMS", (req, res) => {
 });
 
 app.post("/incoming", twilio.webhook({ validate: false }), (req, res) => {
-    const messageBody = req.body.Body;
-    const fromNumber = req.body.From;
+    const obj = Object.fromEntries(req.body.split("&").map(item => item.split("=")))
+    const messageBody = obj.Body;
+    const fromNumber = obj.From;
 
     console.log(`Received a message from ${fromNumber}: ${messageBody}`);
 
