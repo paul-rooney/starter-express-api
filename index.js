@@ -8,7 +8,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-app.use(express.text({ type: "apllication/xml" }));
+app.use(express.text({ type: "application/xml" }));
 
 app.use((req, res, next) => {
     if (req.is("application/xml")) {
