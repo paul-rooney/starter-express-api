@@ -3,6 +3,7 @@ const app = express();
 const cron = require("node-cron");
 const twilio = require("twilio");
 const querystring = require("querystring");
+const { log } = require("console");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -27,12 +28,25 @@ function scheduleSMS(scheduledTime, message, to) {
 }
 
 app.post("/scheduleSMS", async (req, res) => {
+    
     try {
-        const { scheduledTime, message, to } = req.body;
-        console.log({ message, to });
+        // const { scheduledTime, messages } = req.body;
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        
+        if (!Array.isArray(messages)) {
+            return res.status(400).send("Invalid messages format");
+        }
 
-        // scheduleSMS(scheduledTime, message, to);
-        await sendSMS(message, to);
+        const sendPromises = messages.map(async (message) => {
+            const { name, number } = message;
+            const smsMessage = `[STEPHEN AND KIANA'S TEXT HERE]`;
+
+            await sendSMS(smsMessage, number);
+
+            return { name, number };
+        });
+
+        await Promise.all(sendPromises);
 
         res.status(200).send("SMS scheduled successfully");
     } catch (error) {
