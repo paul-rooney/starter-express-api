@@ -110,7 +110,7 @@ app.post("/scheduleSMS2", async (req, res) => {
 
 app.post("/scheduleSMS3", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
