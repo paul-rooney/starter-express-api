@@ -76,7 +76,7 @@ app.post("/scheduleSMS1", async (req, res) => {
             const { name, number } = guest;
             const smsMessage = content;
 
-            await sendSMS(scheduledTime, smsMessage, number);
+            await sendSMS(smsMessage, number);
 
             return { name, number };
         });
@@ -104,7 +104,7 @@ app.post("/scheduleSMS2", async (req, res) => {
             const { name, number } = guest;
             const smsMessage = content;
 
-            await sendSMS(scheduledTime, smsMessage, number);
+            await sendSMS(smsMessage, number);
 
             return { name, number };
         });
@@ -132,7 +132,7 @@ app.post("/scheduleSMS3", async (req, res) => {
             const { name, number } = guest;
             const smsMessage = content;
 
-            await sendSMS(scheduledTime, smsMessage, number);
+            await sendSMS(smsMessage, number);
 
             return { name, number };
         });
@@ -160,7 +160,7 @@ app.post("/scheduleSMS4", async (req, res) => {
             const { name, number } = guest;
             const smsMessage = content;
 
-            await sendSMS(scheduledTime, smsMessage, number);
+            await sendSMS(smsMessage, number);
 
             return { name, number };
         });
