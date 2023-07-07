@@ -54,7 +54,7 @@ const textMessages = [
 
 app.post("/scheduleSMS1", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -80,7 +80,7 @@ app.post("/scheduleSMS1", async (req, res) => {
 
 app.post("/scheduleSMS2", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -106,7 +106,7 @@ app.post("/scheduleSMS2", async (req, res) => {
 
 app.post("/scheduleSMS3", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -132,7 +132,7 @@ app.post("/scheduleSMS3", async (req, res) => {
 
 app.post("/scheduleSMS4", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -140,7 +140,7 @@ app.post("/scheduleSMS4", async (req, res) => {
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
-            const smsMessage = "Good morning " + name.split(" ")[0] + "! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out anytime from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.";
+            const smsMessage = "Good morning " + name.split(" ")[0] + "! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out any time from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.";
 
             await sendSMS(smsMessage, number);
 
