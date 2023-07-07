@@ -64,7 +64,7 @@ const textMessages = [
 
 app.post("/scheduleSMS1", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -92,7 +92,7 @@ app.post("/scheduleSMS1", async (req, res) => {
 
 app.post("/scheduleSMS2", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -120,7 +120,7 @@ app.post("/scheduleSMS2", async (req, res) => {
 
 app.post("/scheduleSMS3", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -148,7 +148,7 @@ app.post("/scheduleSMS3", async (req, res) => {
 
 app.post("/scheduleSMS4", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -184,7 +184,7 @@ app.post("/incoming", twilio.webhook({ validate: false }), async (req, res) => {
 
         const responseMessage = "Thank you for your message!";
 
-        await client.messages.create({ body: responseMessage, from: "+447476564117", to: "+447716610830" });
+        await client.messages.create({ body: responseMessage, from: "+447476564117", to: "+447871645982" });
 
         console.log(`Sent a response to ${fromNumber}`);
         res.status(200).end();
