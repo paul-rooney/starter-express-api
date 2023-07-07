@@ -137,12 +137,11 @@ app.post("/incoming", twilio.webhook({ validate: false }), async (req, res) => {
         const messageBody = requestBody.Body;
         const fromNumber = requestBody.From;
 
+        console.log("requestBody: ", requestBody);
         console.log(`Received a message from ${fromNumber}: ${messageBody}`);
 
-        const responseMessage = "Thank you for your message!";
-
         // await client.messages.create({ body: responseMessage, from: "+447476564117", to: "+447871645982" });
-        await client.messages.create({ body: requestBody, from: fromNumber, to: "+447716610830" });
+        // await client.messages.create({ body: requestBody, from: fromNumber, to: "+447716610830" });
 
         console.log(`Sent a response to ${fromNumber}`);
         res.status(200).end();
