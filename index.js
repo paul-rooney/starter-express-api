@@ -18,8 +18,7 @@ app.all("/", (req, res) => {
 
 function sendSMS(message, to) {
     console.log("message", "=>", message, "to", "=>", to);
-    // return client.messages.create({ body: message, from: "+447476564117", to });
-    return client.messages.create({ body: message, messagingServiceSid: "MGafa6f43201debd183e1c8e47d1b56ca7", to });
+    return client.messages.create({ body: message, from: "+447476564117", to });
 }
 
 function scheduleSMS(scheduledTime, message, to) {
@@ -30,7 +29,7 @@ function scheduleSMS(scheduledTime, message, to) {
 
 app.post("/scheduleSMS1", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
