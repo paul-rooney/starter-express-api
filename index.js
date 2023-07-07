@@ -29,7 +29,7 @@ function scheduleSMS(scheduledTime, message, to) {
 
 app.post("/scheduleSMS1", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
@@ -89,7 +89,7 @@ app.post("/scheduleSMS3", async (req, res) => {
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
-            const smsMessage = name.split(" ")[0] + ", big day ahead… \n\nKey timings are:\n12:45pm - ceremony at Reading Town Hall, please arrive via the Clock Tower entrance;\n2pm - welcome drinks at Thames Lido (the Lido is 10 minutes walk from the Town Hall, but there is a taxi rank outside Town Hall if you don’t wish to walk);\n4pm - food served;\nMidnight - fin.\n\nCan’t wait to spend the day with you all!\nStephen & Kiana.";
+            const smsMessage = `${name.split(" ")[1] === "&" ? `${name.split(" ")[0]} ${name.split(" ")[1]} ${name.split(" ")[2]}` : name.split(" ")[0]}, big day ahead… \n\nKey timings are:\n12:45pm - ceremony at Reading Town Hall, please arrive via the Clock Tower entrance;\n2pm - welcome drinks at Thames Lido (the Lido is 10 minutes walk from the Town Hall, but there is a taxi rank outside Town Hall if you don’t wish to walk);\n4pm - food served;\nMidnight - fin.\n\nCan’t wait to spend the day with you all!\nStephen & Kiana.`;
 
             await sendSMS(smsMessage, number);
 
@@ -115,7 +115,7 @@ app.post("/scheduleSMS4", async (req, res) => {
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
-            const smsMessage = "Good morning " + name.split(" ")[0] + "! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out any time from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.";
+            const smsMessage = `Good morning ${name.split(" ")[1] === "&" ? `${name.split(" ")[0]} ${name.split(" ")[1]} ${name.split(" ")[2]}` : name.split(" ")[0]}! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out any time from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.`;
 
             await sendSMS(smsMessage, number);
 
