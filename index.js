@@ -29,15 +29,15 @@ function scheduleSMS(scheduledTime, message, to) {
 
 app.post("/scheduleSMS1", async (req, res) => {
     try {
-        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/numbers.json")).json();
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
         }
-        
+
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
-            const smsMessage = "Hello " + name.split(" ")[0] + "! We are looking forward to seeing you in Reading next weekend: few drinks on Friday evening, wedding on Saturday, and a barbecue on Sunday hosted by Kiana’s parents. Only the Saturday event is obligatory.\n\nIf you would like to join us for the other events, could you please let us know by replying to this message at your earliest convenience so we can plan accordingly.\n\nStephen & Kiana.";
+            const smsMessage =  `Hello ${name.split(" ")[1] === "&" ? `${name.split(" ")[0]} ${name.split(" ")[1]} ${name.split(" ")[2]}` : name.split(" ")[0]}! We are looking forward to seeing you in Reading next weekend: few drinks on Friday evening, wedding on Saturday, and a barbecue on Sunday hosted by Kiana’s parents. Only the Saturday event is obligatory.\n\nIf you would like to join us for the other events, could you please let us know by replying to this message at your earliest convenience so we can plan accordingly.\n\nStephen & Kiana.`;
 
             await sendSMS(smsMessage, number);
 
