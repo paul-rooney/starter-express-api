@@ -32,33 +32,23 @@ const textMessages = [
         scheduledTime: "30 10 7 7 *",
         // scheduledTime: "0 12 7 7 *",
         content:
-            "Hello! We are looking forward to seeing you all in Reading next weekend: few drinks on Friday evening, wedding on Saturday, and a barbecue on Sunday hosted by Kiana’s parents. Only the Saturday event is obligatory. If you would like to join us for the other events, could you please let us know by replying to this message at your earliest convenience so we can plan accordingly. \n\nStephen & Kiana.",
+            "Hello! We are looking forward to seeing you all in Reading next weekend: few drinks on Friday evening, wedding on Saturday, and a barbecue on Sunday hosted by Kiana’s parents. Only the Saturday event is obligatory.\n\nIf you would like to join us for the other events, could you please let us know by replying to this message at your earliest convenience so we can plan accordingly.\n\nStephen & Kiana.",
     },
     {
         scheduledTime: "32 10 7 7 *",
         // scheduledTime: "0 12 14 7 *",
-        content: "Can’t wait to see some of you this evening at The Market House. We have some space booked from 8pm, but feel free to come whenever suits. The bar has a few different food options for anyone who would like to grab something to eat while there. \n\nStephen & Kiana.",
+        content: "Can’t wait to see some of you this evening at The Market House. We have some space booked from 8pm, but feel free to come whenever suits. The bar has a few different food options for anyone who would like to grab something to eat while there.\n\nStephen & Kiana.",
     },
     {
         scheduledTime: "34 10 7 7 *",
         // scheduledTime: "0 9 15 7 *",
-        content: `
-            Big day ahead…
-            
-            Key timings are:
-            12:45pm - ceremony at Reading Town Hall, please arrive via the Clock Tower entrance;
-            2pm - welcome drinks at Thames Lido (the Lido is 10 minutes walk from the Town Hall, but there is a taxi rank outside Town Hall if you don’t wish to walk);
-            4pm - food served;
-            Midnight - fin.
-            \n
-            \nCan’t wait to spend the day with you all!
-            \nStephen & Kiana.`,
+        content: "Big day ahead… \n\nKey timings are:\n12:45pm - ceremony at Reading Town Hall, please arrive via the Clock Tower entrance;\n2pm - welcome drinks at Thames Lido (the Lido is 10 minutes walk from the Town Hall, but there is a taxi rank outside Town Hall if you don’t wish to walk);\n4pm - food served;\nMidnight - fin.\n\nCan’t wait to spend the day with you all!\nStephen & Kiana.",
     },
     {
         scheduledTime: "36 10 7 7 *",
         // scheduledTime: "0 9 16 7 *",
         content:
-            "Good morning! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out anytime from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home! \n\nStephen & Kiana.",
+            "Good morning! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out anytime from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.",
     },
 ];
 
