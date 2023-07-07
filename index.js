@@ -143,7 +143,7 @@ app.post("/incoming", twilio.webhook({ validate: false }), async (req, res) => {
         console.log(`Received a message from ${fromNumber}: ${messageBody}`);
 
         // await client.messages.create({ body: responseMessage, from: "+447476564117", to: "+447871645982" });
-        await client.messages.create({ body: `${messageBody} \n\nfrom ${fromNumber}`, to: "+447716610830" });
+        await client.messages.create({ body: `${messageBody} \n\nfrom ${fromNumber}`, from: "+447476564117", to: "+447716610830" });
 
         console.log(`Sent a response to ${fromNumber}`);
         res.status(200).end();
