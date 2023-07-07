@@ -70,7 +70,7 @@ app.post("/scheduleSMS1", async (req, res) => {
             return res.status(400).send("Invalid messages format");
         }
 
-        const { scheduledTime, content } = textMessage[0];
+        const { scheduledTime, content } = textMessages[0];
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
@@ -98,7 +98,7 @@ app.post("/scheduleSMS2", async (req, res) => {
             return res.status(400).send("Invalid messages format");
         }
 
-        const { scheduledTime, content } = textMessage[1];
+        const { scheduledTime, content } = textMessages[1];
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
@@ -126,7 +126,7 @@ app.post("/scheduleSMS3", async (req, res) => {
             return res.status(400).send("Invalid messages format");
         }
 
-        const { scheduledTime, content } = textMessage[2];
+        const { scheduledTime, content } = textMessages[2];
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
