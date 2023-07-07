@@ -62,29 +62,110 @@ const textMessages = [
     },
 ];
 
-app.post("/scheduleSMS", async (req, res) => {
+app.post("/scheduleSMS1", async (req, res) => {
     try {
-        // const { scheduledTime, messages } = req.body;
         const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
 
         if (!Array.isArray(messages)) {
             return res.status(400).send("Invalid messages format");
         }
 
-        textMessages.forEach(async (textMessage) => {
-            const { scheduledTime, content } = textMessage;
+        const { scheduledTime, content } = textMessage[0];
 
-            const sendPromises = messages.map(async (guest) => {
-                const { name, number } = guest;
-                const smsMessage = content;
+        const sendPromises = messages.map(async (guest) => {
+            const { name, number } = guest;
+            const smsMessage = content;
 
-                await scheduleSMS(scheduledTime, smsMessage, number);
+            await sendSMS(scheduledTime, smsMessage, number);
 
-                return { name, number };
-            });
-
-            await Promise.all(sendPromises);
+            return { name, number };
         });
+
+        await Promise.all(sendPromises);
+
+        res.status(200).send("SMS scheduled successfully");
+    } catch (error) {
+        console.error("Failed to process the request: ", error);
+        res.status(500).send("Failed to process the request");
+    }
+});
+
+app.post("/scheduleSMS2", async (req, res) => {
+    try {
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+
+        if (!Array.isArray(messages)) {
+            return res.status(400).send("Invalid messages format");
+        }
+
+        const { scheduledTime, content } = textMessage[1];
+
+        const sendPromises = messages.map(async (guest) => {
+            const { name, number } = guest;
+            const smsMessage = content;
+
+            await sendSMS(scheduledTime, smsMessage, number);
+
+            return { name, number };
+        });
+
+        await Promise.all(sendPromises);
+
+        res.status(200).send("SMS scheduled successfully");
+    } catch (error) {
+        console.error("Failed to process the request: ", error);
+        res.status(500).send("Failed to process the request");
+    }
+});
+
+app.post("/scheduleSMS3", async (req, res) => {
+    try {
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+
+        if (!Array.isArray(messages)) {
+            return res.status(400).send("Invalid messages format");
+        }
+
+        const { scheduledTime, content } = textMessage[2];
+
+        const sendPromises = messages.map(async (guest) => {
+            const { name, number } = guest;
+            const smsMessage = content;
+
+            await sendSMS(scheduledTime, smsMessage, number);
+
+            return { name, number };
+        });
+
+        await Promise.all(sendPromises);
+
+        res.status(200).send("SMS scheduled successfully");
+    } catch (error) {
+        console.error("Failed to process the request: ", error);
+        res.status(500).send("Failed to process the request");
+    }
+});
+
+app.post("/scheduleSMS4", async (req, res) => {
+    try {
+        const messages = await (await fetch("https://stephenandkiana.wedding/guestlist/test-number.json")).json();
+
+        if (!Array.isArray(messages)) {
+            return res.status(400).send("Invalid messages format");
+        }
+
+        const { scheduledTime, content } = textMessage[3];
+
+        const sendPromises = messages.map(async (guest) => {
+            const { name, number } = guest;
+            const smsMessage = content;
+
+            await sendSMS(scheduledTime, smsMessage, number);
+
+            return { name, number };
+        });
+
+        await Promise.all(sendPromises);
 
         res.status(200).send("SMS scheduled successfully");
     } catch (error) {
