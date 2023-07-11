@@ -115,7 +115,7 @@ app.post("/scheduleSMS4", async (req, res) => {
 
         const sendPromises = messages.map(async (guest) => {
             const { name, number } = guest;
-            const smsMessage = `Good morning ${name.split(" ")[1] === "&" ? `${name.split(" ")[0]} ${name.split(" ")[1]} ${name.split(" ")[2]}` : name.split(" ")[0]}! Thanks for coming yesterday and making the day so special. For those planning to come to the barbecue, you are welcome to drop in and out any time from midday. The address is 42 St. Anne’s Road, Caversham, RG4 7PA. For those unable to join, thanks again for being there yesterday and safe travels home!\n\nStephen & Kiana.`;
+            const smsMessage = `Hi ${name.split(" ")[1] === "&" ? `${name.split(" ")[0]} ${name.split(" ")[1]} ${name.split(" ")[2]}` : name.split(" ")[0]}! No BBQ: Due to weather concerns Kiana’s parents will instead host a kebab lunch at the Persian Palace (2 Bridge St, RG8 8AA) on Sunday from 12pm.\n\nPlease let us know if you plan on attending.\n\nStephen & Kiana`
 
             await sendSMS(smsMessage, number);
 
